@@ -1,0 +1,59 @@
+;*******************************************************
+;HyperCube CAM post processor for Fusion360: Version 1.0
+;Compatible with Marlin 1.1.4+
+;For use with custom NXT bots
+;*******************************************************
+
+M117 Starting...
+M5      ;Pen Up
+G21     ;Metric Values
+G90     ;Absolute Positioning
+G0 F3600
+G28
+
+M117 Trace8
+G0 X149.906 Y30.179
+G0 Z15
+G0 Z5
+G1 Z0 F1206
+G1 Y121.332 F3000
+G1 X169.412
+G1 X69.256 Y159.594
+G1 X19.74 Y121.332
+G1 X44.498
+G1 Y30.179
+G1 X149.906
+G1 Z5 F1206
+G0 X80.134 F3600
+G1 Z0 F1206
+G1 Y88.697 F3000
+G1 X110.519
+G1 Y30.179
+G1 Z5 F1206
+G0 X92.138 Y101.451 F3600
+G1 Z0 F1206
+G1 Y131.836 F3000
+G1 X59.878
+G1 Y101.451
+G1 X92.138
+G1 Z5 F1206
+G0 Y116.643 F3600
+G1 Z0 F1206
+G1 X59.878 F3000
+G1 Z5 F1206
+G0 X76.008 Y131.836 F3600
+G1 Z0 F1206
+G1 Y101.451 F3000
+G1 Z5 F1206
+G0 X110.519 Y143.831 F3600
+G1 Z0 F1206
+G1 Y167.847 F3000
+G1 X97.202
+G1 Y148.918
+G1 Z5 F1206
+G0 Z15 F3600
+G17
+
+M5     ;Pen up
+G0 X0 Y0 F3600
+M117 Finished :)
