@@ -2,6 +2,9 @@
 Pen plotter built entirely of lego elements including motors and controller. Programmed with PyBricks and Python.
 Some inspiration taken from [nWestie's NXT-Drawbot project](https://github.com/nWestie/NXT-Drawbot)
 
+# Text Generator
+I've developed a program that converts typed words into coordinates for the pen plotter, at the time of this writing, it is the only functional program I have developed for the plotter
+
 
 ## Project goals:
 * make a functional pen plotter which can draw single line images
