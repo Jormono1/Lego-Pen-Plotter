@@ -3,7 +3,7 @@
 async def homing():
     await Z_Motor.run_until_stalled(move_speed,duty_limit=20)  # raise pen
     print("Homing X Axis")
-    await X_Motor.run_until_stalled(-move_speed, duty_limit=20)    # run until 0
+    await X_Motor.run_until_stalled(-move_speed, duty_limit=15)    # run until 0
     X_Motor.reset_angle(1)
     print("Homing Y Axis")
     await Y_Motor.run_until_stalled(-move_speed, duty_limit=20)
@@ -46,3 +46,4 @@ async def main():
 
 run_task(homing())
 run_task(main())
+
