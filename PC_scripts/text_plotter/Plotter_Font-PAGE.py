@@ -623,7 +623,10 @@ def coordinate_formatter(coords):
         else:
             new_line = "[" + str(line[0]) + "," + str(line[1]) + "," + '"' + str(line[2]) + '"' + "],\n"
         scrubbed_coordinates.append(new_line)
-    final_jog = "[" + str(paper_x_max) + "," + str(paper_y_max) + ",False]"
+    if index_cards:
+        final_jog = "[" + str(paper_x_max) + "," + str(paper_y_max) + ",False]"
+    else:
+        final_jog = "[1," + str(Y_Max) + ",False]"
     scrubbed_coordinates.append(final_jog)
 
 ### call both coordinate generation functions ###
