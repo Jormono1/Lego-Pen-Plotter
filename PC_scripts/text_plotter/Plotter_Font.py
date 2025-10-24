@@ -11,7 +11,7 @@ previous_y = 0
 
 ### False = using total machine capacity as described in lines 6-7 ###
 ### True = using index cards, dimensions as described in lines 8-13 ###
-index_cards = input("Index card or FUll Page? (i or f)"
+index_cards = input("Index card or FUll Page? (i or f)")
 index_cards = index_cards.upper()
 if index_cards == "I":
     index_cards = True
@@ -689,4 +689,5 @@ for line in lines:
     output.close()
     coordinates.clear()     # prevents re-writing old coordinates on new line file
     scrubbed_coordinates.clear()
+
 
