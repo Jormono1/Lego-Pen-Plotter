@@ -21,6 +21,7 @@ if index_cards:
 else:
     X_Max = machine_x_range
     Y_Max = machine_y_range
+    previous_y += Y_Max
 
 coordinates = []
 scrubbed_coordinates = []
@@ -480,7 +481,32 @@ font = {
     [False,2,False],
     [-1,1,False],
     [False,False,"U"],
-    [2,-4,False]]}
+    [2,-4,False]],
+"/" : [5,
+    [False,False,"D"],
+    [4,4,False],
+    [False,False,"U"],
+    [1,-4,False]],
+":" : [1,
+    [False,False,"D"],
+    [False,1,False],
+    [False,False,"U"],
+    [False,2,False],
+    [False,False,"D"],
+    [False,1,False],
+    [False,False,"U"],
+    [1,-4,False]],
+"-" : [3,
+    [False,2,False],
+    [False,False,"D"],
+    [2,False,False],
+    [False,False,"U"],
+    [1,-2,False]],
+"_" : [3,
+    [False,False,"D"],
+    [2,False,False],
+    [False,False,"U"],
+    [1,False,False]]}
 
 scale = 40
 scaled_font = {}
@@ -613,17 +639,20 @@ def coordinate_formatter(coords):
     if index_cards:                 # adds offset to automatically align machine to known repeatable paper position
         paper_offset = "[" + str(paper_x_min) + "," + str(paper_y_max) + ",False],\n"
         scrubbed_coordinates.append(paper_offset)
+    else:
+        paper_offset = "[False," + str(Y_Max) + ",False],\n"
+        scrubbed_coordinates.append(paper_offset)
     for line in coords:
         if type(line[2]) == bool:
             new_line = "[" + str(line[0]) + "," + str(line[1]) + "," + str(line[2]) + "],\n"
         else:
             new_line = "[" + str(line[0]) + "," + str(line[1]) + "," + '"' + str(line[2]) + '"' + "],\n"
         scrubbed_coordinates.append(new_line)
-    if index_cards:                 # adds offset to automatically align machine to known repeatable paper position
+    if index_cards:
         final_jog = "[" + str(paper_x_max) + "," + str(paper_y_max) + ",False]"
-        scrubbed_coordinates.append(final_jog)
     else:
-        scrubbed_coordinates.append("[1,1,False]")      # clears the gantry away from the plot automatically
+        final_jog = "[1," + str(Y_Max) + ",False]"
+    scrubbed_coordinates.append(final_jog)
 
 ### call both coordinate generation functions ###
 line_count = 0
