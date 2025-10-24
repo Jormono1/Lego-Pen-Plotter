@@ -481,7 +481,32 @@ font = {
     [False,2,False],
     [-1,1,False],
     [False,False,"U"],
-    [2,-4,False]]}
+    [2,-4,False]],
+"/" : [5,
+    [False,False,"D"],
+    [4,4,False],
+    [False,False,"U"],
+    [1,-4,False]],
+":" : [1,
+    [False,False,"D"],
+    [False,1,False],
+    [False,False,"U"],
+    [False,2,False],
+    [False,False,"D"],
+    [False,1,False],
+    [False,False,"U"],
+    [1,-4,False]],
+"-" : [3,
+    [False,2,False],
+    [False,False,"D"],
+    [2,False,False],
+    [False,False,"U"],
+    [1,-2,False]],
+"_" : [3,
+    [False,False,"D"],
+    [2,False,False],
+    [False,False,"U"],
+    [1,False,False]]}
 
 scale = 40
 scaled_font = {}
