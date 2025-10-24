@@ -21,7 +21,7 @@ if index_cards:
 else:
     X_Max = machine_x_range
     Y_Max = machine_y_range
-    previous_y += Y_max
+    previous_y += Y_Max
 
 coordinates = []
 scrubbed_coordinates = []
