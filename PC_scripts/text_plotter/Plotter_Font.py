@@ -1,8 +1,8 @@
 machine_x_range = 2289        # Upper limit of machine travel in X direction (degrees rotation)
 machine_y_range = 3436        # Upper limit of machine travel in Y direction (degrees rotation)
-paper_x_min = 150    # defines starting corner of paper to be written on
+paper_x_min = 165    # defines one of paper to be written on
 paper_y_min = 466
-paper_x_max = 2064  # defines opposite corner of paper from min, describes full range of paper
+paper_x_max = 2250  # defines opposite corner of paper from min, describes full range of paper
 paper_y_max = 1455
 paper_x_range = paper_x_max - paper_x_min
 paper_y_range = paper_y_max - paper_x_min
@@ -689,6 +689,7 @@ for line in lines:
     output.close()
     coordinates.clear()     # prevents re-writing old coordinates on new line file
     scrubbed_coordinates.clear()
+
 
 
 
