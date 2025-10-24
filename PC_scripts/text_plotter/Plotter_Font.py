@@ -3,16 +3,22 @@ machine_y_range = 3436        # Upper limit of machine travel in Y direction (de
 paper_x_min = 62    # defines starting corner of paper to be written on
 paper_y_min = 466
 paper_x_max = 2064  # defines opposite corner of paper from min, describes full range of paper
-paper_y_max = 2000
+paper_y_max = 1455
 paper_x_range = paper_x_max - paper_x_min
 paper_y_range = paper_y_max - paper_x_min
 previous_x = 0
 previous_y = 0
 
-### Manually set this value ###
 ### False = using total machine capacity as described in lines 6-7 ###
 ### True = using index cards, dimensions as described in lines 8-13 ###
-index_cards = True
+index_cards = input("Index card or FUll Page? (i or f)"
+index_cards = index_cards.upper()
+if index_cards == "I":
+    index_cards = True
+elif index_cards == "F":
+    index_cards = False
+elif index_cards == "":
+    index_cards = True
 if index_cards:
     X_Max = paper_x_max
     Y_Max = paper_y_max
@@ -683,3 +689,4 @@ for line in lines:
     output.close()
     coordinates.clear()     # prevents re-writing old coordinates on new line file
     scrubbed_coordinates.clear()
+
