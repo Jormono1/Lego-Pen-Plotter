@@ -21,6 +21,7 @@ if index_cards:
 else:
     X_Max = machine_x_range
     Y_Max = machine_y_range
+    previous_y += Y_max
 
 coordinates = []
 scrubbed_coordinates = []
@@ -613,17 +614,17 @@ def coordinate_formatter(coords):
     if index_cards:                 # adds offset to automatically align machine to known repeatable paper position
         paper_offset = "[" + str(paper_x_min) + "," + str(paper_y_max) + ",False],\n"
         scrubbed_coordinates.append(paper_offset)
+    else:
+        paper_offset = "[False," + str(Y_Max) + ",False],\n"
+        scrubbed_coordinates.append(paper_offset)
     for line in coords:
         if type(line[2]) == bool:
             new_line = "[" + str(line[0]) + "," + str(line[1]) + "," + str(line[2]) + "],\n"
         else:
             new_line = "[" + str(line[0]) + "," + str(line[1]) + "," + '"' + str(line[2]) + '"' + "],\n"
         scrubbed_coordinates.append(new_line)
-    if index_cards:                 # adds offset to automatically align machine to known repeatable paper position
-        final_jog = "[" + str(paper_x_max) + "," + str(paper_y_max) + ",False]"
-        scrubbed_coordinates.append(final_jog)
-    else:
-        scrubbed_coordinates.append("[1,1,False]")      # clears the gantry away from the plot automatically
+    final_jog = "[" + str(paper_x_max) + "," + str(paper_y_max) + ",False]"
+    scrubbed_coordinates.append(final_jog)
 
 ### call both coordinate generation functions ###
 line_count = 0
