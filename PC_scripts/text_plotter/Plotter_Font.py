@@ -512,7 +512,17 @@ font = {
     [False,False,"D"],
     [2,False,False],
     [False,False,"U"],
-    [1,False,False]]}
+    [1,False,False]],
+"+" : [5,
+    [2,False,False],
+    [False,False,"D"],
+    [False,4,False],
+    [False,False,"U"],
+    [-2,-2,False],
+    [False,False,"D"],
+    [4,False,False],
+    [False,False,"U"],
+    [1,-2,False]]}
 
 scale = 40
 scaled_font = {}
@@ -689,6 +699,7 @@ for line in lines:
     output.close()
     coordinates.clear()     # prevents re-writing old coordinates on new line file
     scrubbed_coordinates.clear()
+
 
 
 
