@@ -93,7 +93,7 @@ font = {
     [False,4,False],
     [2,False,False],
     [False,False,"U"],
-    [-1,-2,False],
+    [-2,-2,False],
     [False,False,"D"],
     [1,False,False],
     [False,False,"U"],
@@ -689,6 +689,7 @@ for line in lines:
     output.close()
     coordinates.clear()     # prevents re-writing old coordinates on new line file
     scrubbed_coordinates.clear()
+
 
 
 
