@@ -3,6 +3,10 @@
 async def homing():
     await Z_Motor.run_until_stalled(move_speed,duty_limit=20)  # raise pen
     print("Homing X Axis")
+    ### I've observed that the X motor limit has required adjustment based on remaining battery capacity ###
+    ### set to 15 when battery is fresh, set to 18 when battery is low ###
+    ### when battery fresh too high of a threshold it will skip gears and not stop at 0 point ###
+    ### when battery is low a high threshold can cause it to read high torque without any movement to 0 point ###
     await X_Motor.run_until_stalled(-move_speed, duty_limit=15)    # run until 0
     X_Motor.reset_angle(1)
     print("Homing Y Axis")
@@ -46,4 +50,5 @@ async def main():
 
 run_task(homing())
 run_task(main())
+
 
