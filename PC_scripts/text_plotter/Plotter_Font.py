@@ -456,11 +456,11 @@ font = {
     [False,2,False],
     [False,False,"U"],
     [1,-4,False]],
-"," : [2,
+"," : [3,
     [False,False,"D"],
-    [1,1,False],
+    [2,2,False],
     [False,False,"U"],
-    [1,-1,False]],
+    [1,-2,False]],
 "?" : [3,
     [1,False,False],
     [False,False,"D"],
@@ -664,8 +664,8 @@ def coordinate_formatter(coords):
         else:
             new_line = "[" + str(line[0]) + "," + str(line[1]) + "," + '"' + str(line[2]) + '"' + "],\n"
         scrubbed_coordinates.append(new_line)
-    if index_cards:
-        final_jog = "[" + str(paper_x_max) + "," + str(paper_y_max) + ",False]"
+    if index_cards:             # add movement to clear gantry away from paper for visibility and ease of access to paper at end of plot
+        final_jog = "[" + str(paper_x_min + ((paper_x_max - paper_x_min)/2)) + "," + str(paper_y_max) + ",False]"
     else:
         final_jog = "[1," + str(Y_Max) + ",False]"
     scrubbed_coordinates.append(final_jog)
@@ -699,12 +699,3 @@ for line in lines:
     output.close()
     coordinates.clear()     # prevents re-writing old coordinates on new line file
     scrubbed_coordinates.clear()
-
-
-
-
-
-
-
-
-
