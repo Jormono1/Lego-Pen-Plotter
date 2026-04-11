@@ -1,24 +1,17 @@
 machine_x_range = 2289        # Upper limit of machine travel in X direction (degrees rotation)
 machine_y_range = 3436        # Upper limit of machine travel in Y direction (degrees rotation)
 paper_x_min = 165    # defines one of paper to be written on
-paper_y_min = 466
+paper_y_min = 375
 paper_x_max = 2250  # defines opposite corner of paper from min, describes full range of paper
 paper_y_max = 1800
 paper_x_range = paper_x_max - paper_x_min
-paper_y_range = paper_y_max - paper_x_min
+paper_y_range = paper_y_max - paper_y_min
 previous_x = 0
 previous_y = 0
 
 ### False = using total machine capacity as described in lines 6-7 ###
 ### True = using index cards, dimensions as described in lines 8-13 ###
-index_cards = input("Index Card or Full Page? (i or f)")
-index_cards = index_cards.upper()
-if index_cards == "I":
-    index_cards = True
-elif index_cards == "F":
-    index_cards = False
-elif index_cards == "":
-    index_cards = True
+index_cards = True
 if index_cards:
     X_Max = paper_x_max
     Y_Max = paper_y_max
@@ -559,12 +552,11 @@ for letter in font:
 
 ### get text from user to be plotted ###
 usr_input = input("Please type the text you wish to plot: ")
-row_number = input("would you like to start on a lower row? if yes type the row number (first row = 1, do not use with multiple line files)")
-if row_number == "":
-    row_number = 1
 usr_input = usr_input.upper()
 txt_length = length_finder(usr_input)
 lines = []
+y_row_count = 0
+first_line = True
 line = ""
 ### splits user input into multiple lines as needed ###
 if txt_length > X_Max:
@@ -583,12 +575,14 @@ if txt_length > X_Max:
             lines.append(line)
             line = ""
             line_length = 0
+            y_row_count +=1
             line_remaining = X_Max
         line += word
         line_length += word_length
         line_remaining -= word_length
         if word == words[-1]:       # if last word in user input append the line to lines
             lines.append(line)
+            y_row_count += 1
         else:                       # if not last word now add a space instead
             if line_remaining > space_length:
                 line += " "
@@ -596,28 +590,35 @@ if txt_length > X_Max:
                 line_remaining -= space_length
 else:
     lines.append(usr_input)
+    y_row_count += 1
 
 print("plotter will draw the words in the following format:")
 for line in lines:
     print(line)
 
-output_file = input("Please type the output file name (without extension)\nmultiple lines of text will be split between multiple files starting from 0 ")
+output_file = input("Please type the output file name (without extension)\nmultiple lines of text will be split between multiple files")
 if output_file == "":    # set default file name
     output_file = "output"
 
 ### finds coordinates to start the next row ###
 def starting_coordinates(text):
-    global previous_x, previous_y
+    global previous_x, previous_y, first_line, y_row_count
     starting_x = length_finder(text)
     #print("line length = " + str(starting_x))
     starting_x = X_Max - starting_x     # find the amount of unused horizontal space
     if index_cards:
         starting_x += paper_x_min
-    #print("xmax - line length = " + str(starting_x))
     starting_x = int(round(starting_x / 2,0))         # divide space by 2 to center text
-    #print("half of previous value = " + str(starting_x))
     previous_x = starting_x
-    starting_y = previous_y - (5 * scale * int(row_number))               # 5 is because all characters defined as 4 units tall, plus 1 to prevent overlap
+    if first_line:
+        spacing_y = y_row_count*5*scale  # line count * 5 (font is 4 units tall, plus 1 to prevent overlap) * scale determines total y space filled by text
+        starting_y = paper_y_range - spacing_y
+        starting_y = int(round(starting_y / 2,0))      # divide unused y space by 2 to center text
+        starting_y = Y_Max - starting_y   # down the halved empty y space from the top
+        #starting_y -= 5 * scale   # add offset for the row height
+        first_line = False
+    else:
+        starting_y = previous_y - (5 * scale)               # 5 is because all characters defined as 4 units tall, plus 1 to prevent overlap
     if starting_y > Y_Max:
         print("Cannot fit all lines in plotter, exceeding size")
     #print("previous Y = " + str(previous_y) + ", next Y = " + str(starting_y))
@@ -665,7 +666,7 @@ def coordinate_formatter(coords):
             new_line = "[" + str(line[0]) + "," + str(line[1]) + "," + '"' + str(line[2]) + '"' + "],\n"
         scrubbed_coordinates.append(new_line)
     if index_cards:             # add movement to clear gantry away from paper for visibility and ease of access to paper at end of plot
-        final_jog = "[" + str(paper_x_min + ((paper_x_max - paper_x_min)/2)) + "," + str(paper_y_max) + ",False]"
+        final_jog = "[" + str(paper_x_min + ((paper_x_max - paper_x_min)/2)) + "," + str(paper_y_max+600) + ",False]"
     else:
         final_jog = "[1," + str(Y_Max) + ",False]"
     scrubbed_coordinates.append(final_jog)
