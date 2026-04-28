@@ -4,18 +4,22 @@ Pen plotter built entirely of lego elements including motors and controller. Pro
 
 Lego design files available on [Rebrickable](https://rebrickable.com/mocs/MOC-239758/jormono/lego-pen-plotter)
 
-# Text Generator
+## Text Generator
 I've developed a program that converts typed words into coordinates for the pen plotter, at the time of this writing, it is the only functional program I have developed for the plotter
 ![Plotter Sign](https://github.com/user-attachments/assets/73def290-746f-4b3f-a109-371021c321f4)
 
-# Work Flow
+### Work Flow
 * Build Pen Plotter
 * Install Pybricks firmware on hub
-* run Plotter_Font.py on your computer
+* run Plotter_Font.py on your computer (NOTE: ensure the Seed A and Seed B files are in the same directory as Plotter_Font.py)
 * when prompted, type out whatever text you wish the pen plotter to write
 * when prompted, supply a file name. The file will be save directly into the same directory
 * open the pybricks web ui
 * upload the file(s) that Plotter_Font.py generated
 * Connect to your hub via bluetooth
+* Remove the Technic brick with the two 8 tooth gears attached, place an index card to be written on, and replace the technic brick to hold the index card securely in place
 * send the (first) file by pressing the "play" button, if you hover your cursor over the button a tooltip will pop up which reads "Run this program [F5]"
 * send the next file if applicable
+
+## Etch A Sketch Mode
+In Etch A Sketch mode we forgo precompiled instructions in favor of manually controlling the plotter by use of an xbox controller. The left Stick up and down controls the Y Motor, the right stick left and right controls the X motor. To control the pen, press A to toggle it up and down. This allows for a more free-form experience, you could draw pictures or write words. You'll probably need to be a better artist than I am! This program includes safeguards that stop the user from "crashing" the plotter by driving it out of bounds. It will simply ignore inputs from the xbox controller that tell it to move beyond pre-defined boundaries. Simply load the script to the hub, this will disconnect the hub from your computer automatically and allow you to connect an xbox controller see the [pybricks documentation](https://docs.pybricks.com/en/latest/iodevices/xboxcontroller.html) for a guide on pairing an xbox controller to the hub.
