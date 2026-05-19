@@ -1,14 +1,14 @@
-### standard mode: Hub light = Left stick up/down controls Y motor. Left stick left/right controls X motor ###
-### alt mode: Hub light = Red, Blue, Left stick up/down controls Y motor. Right stick left/right controls X motor ###
+### standard mode: Hub light = Blue, Left stick controls X and Y motors ###
+### alt mode: Hub light = Red, Left stick up/down controls Y motor, Right stick left/right controls X motor ###
 ### Y button triggers homing sequence, X button Toggles standard/alt modes ###
 ### LB button reduces speed, RB button increases speed ###
+### B button sends gantry to Y Max, intention is to clear way for changing paper, press B again to return to normal use ###
 
 ### IF FRESH BATTERIES change value on line 36 to 15, if not fresh revert to 18 ###
 from pybricks.hubs import TechnicHub
 from pybricks.iodevices import XboxController
 from pybricks.parameters import Direction, Port, Side, Stop, Button, Color
 from pybricks.pupdevices import Motor
-from pybricks.tools import wait, run_task
 
 X_Motor = Motor(Port.A, Direction.COUNTERCLOCKWISE)
 Y_Motor = Motor(Port.B)
@@ -42,7 +42,7 @@ def homing(x_min, y_min):
 
 def x_can_move(stick):                                                          # Checks current position against paper boundaries
     if stick >= 0:
-        if X_Motor.angle() >= allow_x_max:                                      # ignores input above max and below min but doesn't prevent return to allowable area
+        if X_Motor.angle() >= allow_x_max:                                      # ignores input above max or below min but doesn't prevent return to allowable area
             return 0
         else:
             return 1                                                            # returns 1 or 0, this is multiplied into the motor speed, if 0 motor will not rotate
@@ -54,7 +54,7 @@ def x_can_move(stick):                                                          
 
 def y_can_move(stick):
     if stick >= 0:
-        if Y_Motor.angle() >= allow_y_max:
+        if Y_Motor.angle() >= allow_y_max:                                      
             return 0
         else:
             return 1
@@ -64,7 +64,7 @@ def y_can_move(stick):
         else:
             return 1
 
-def main(pen_engaged, stick_speed, x_min, y_min, alt_control, button_wait):
+def main(pen_engaged, stick_speed, x_min, y_min, alt_control, button_wait, move_speed):
     while True:
         if alt_control:                                                         # alt control is on, x on right stick y on left stick
             stick_y = xbox.joystick_left()[1]
@@ -81,6 +81,14 @@ def main(pen_engaged, stick_speed, x_min, y_min, alt_control, button_wait):
             else:
                 Z_Motor.run_until_stalled(-move_speed, duty_limit=20)
                 pen_engaged = True
+        elif Button.B in xbox.buttons.pressed():                                # B button moves gantry back for changing the paper
+            Z_Motor.run_until_stalled(move_speed,duty_limit=20)
+            Y_Motor.run_target(move_speed, paper_y_max + 250 , wait=True)
+            hold = True
+            while hold:                                                         # B button a second time returns the gantry to the paper
+                if Button.B in xbox.buttons.pressed():
+                    Y_Motor.run_target(move_speed, allow_y_max, wait=True)
+                    hold = False
         elif Button.Y in xbox.buttons.pressed():                                # Y button triggers homing sequence
             homing(x_min, y_min)
         elif Button.X in xbox.buttons.pressed():                                # X button toggles control mode
@@ -101,4 +109,4 @@ def main(pen_engaged, stick_speed, x_min, y_min, alt_control, button_wait):
                 stick_speed += 0.5      
                 wait(button_wait)          
 homing(allow_x_min, allow_y_min)
-main(pen_engaged, stick_speed, allow_x_min, allow_y_min, alt_control, button_wait)
+main(pen_engaged, stick_speed, allow_x_min, allow_y_min, alt_control, button_wait, move_speed)
